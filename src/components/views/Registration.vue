@@ -25,7 +25,7 @@
                       <tr role="row">
                         <th aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" style="width: 167px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting_asc">Name</th>
                         <th aria-label="Browser: activate to sort column ascending" style="width: 207px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Email</th>
-                        <th aria-label="Platform(s): activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Potential Score</th>
+                        <th aria-label="Platform(s): activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Potential Score (s)</th>
                         <th aria-label="Engine version: activate to sort column ascending" style="width: 142px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Action</th>
                       </tr>
                     </thead>
@@ -58,7 +58,10 @@
 </template>
 
 <script>
-import api from '../../api'
+// import api from '../../api'
+import $ from 'jquery'
+var Parse = require('parse')
+
 // import $ from 'jquery'
 // Require needed datatables modules
 import 'datatables.net'
@@ -67,19 +70,71 @@ export default {
   name: 'Registration',
   data () {
     return {
-      registrations: null,
+      registrations: [],
       error: null
     }
   },
   methods: {
     getRegistrations () {
-      api.getRegistrations()
-      .then(response => {
-        this.registrations = response.data.results
+      // api.getRegistrations()
+      // .then(response => {
+      //   this.registrations = response.data.results
+      // })
+      // .catch(error => {
+      //   console.log(error)
+      //   this.error = error
+      // })
+
+      // Parse.initialize('his-data')
+      // Parse.serverURL = 'http://his-data.herokuapp.com/parse'
+      // var Registration = Parse.Object.extend('Registration')
+      // var query = new Parse.Query(Registration)
+      // query.find()
+      // .then(result => {
+      //   result.forEach(val => {
+      //     this.registrations.push(val.toJSON())
+      //   })
+      // })
+      // .catch(error => {
+      //   console.log(error)
+      // })
+
+      // live query
+      Parse.initialize('his-data')
+      Parse.serverURL = 'http://his-data.herokuapp.com/parse'
+      var Registration = Parse.Object.extend('Registration')
+      var query = new Parse.Query(Registration)
+
+      query.find()
+      .then(result => {
+        result.forEach(val => {
+          this.registrations.push(val.toJSON())
+        })
       })
       .catch(error => {
         console.log(error)
-        this.error = error
+      })
+
+      var subscription = query.subscribe()
+
+      subscription.on('open', () => {
+        console.log('connection opened')
+      })
+      subscription.on('create', (object) => {
+        this.registrations.push(object.toJSON())
+      })
+      subscription.on('update', (object) => {
+        var localMatchedObject = this.registrations.find(obj => { return obj.objectId === object.toJSON().objectId })
+        Object.assign(localMatchedObject, object.toJSON())
+      })
+      subscription.on('delete', (object) => {
+        var localMatchedObject = this.registrations.find(obj => { return obj.objectId === object.toJSON().objectId })
+        Object.assign(localMatchedObject, null)
+
+        var updatedData = $.grep(this.registrations, function (e) {
+          return e.objectId !== object.toJSON().objectId
+        })
+        this.registrations = updatedData
       })
     }
   },
