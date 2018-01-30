@@ -11,6 +11,7 @@ import AccessView from './components/views/Access.vue'
 import ServerView from './components/views/Server.vue'
 import ReposView from './components/views/Repos.vue'
 import RegistrationView from './components/views/Registration.vue'
+import RegistrationDetailsView from './components/views/RegistrationDetails.vue'
 
 // Routes
 const routes = [{
@@ -77,6 +78,14 @@ const routes = [{
     name: 'Registration',
     meta: {
       description: 'List of all registrations'
+    }
+  }, {
+    path: 'registration/:id',
+    alias: '',
+    component: RegistrationDetailsView,
+    name: 'details',
+    meta: {
+      description: 'Full details of registration'
     }
   }]
 }, {

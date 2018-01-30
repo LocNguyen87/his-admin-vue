@@ -25,6 +25,7 @@
                       <tr role="row">
                         <th aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" style="width: 167px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting_asc">Name</th>
                         <th aria-label="Browser: activate to sort column ascending" style="width: 207px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Email</th>
+                        <th aria-label="Phone Number" style="width: 207px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Phone Number</th>
                         <th aria-label="Platform(s): activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Potential Score (s)</th>
                         <th aria-label="Engine version: activate to sort column ascending" style="width: 142px;" colspan="1" rowspan="1" aria-controls="example1" tabindex="0" class="sorting">Action</th>
                       </tr>
@@ -33,14 +34,28 @@
                       <tr v-for="registration in registrations" >
                         <td>{{ registration.fullName }}</td>
                         <td>{{ registration.email }}</td>
-                        <td>{{ registration.potentialScore }}</td>
-                        <td>hihi</td>
+                        <td>{{ registration.phone }}</td>
+                        <td>
+                          <div class="progress progress-xs progress-striped active">
+                            <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                          </div>
+                          <span class="badge bg-green">{{ registration.potentialScore * 10 }}%</span>
+                        </td>
+                        <td>
+                          <router-link tag="a" class="btn btn-sm btn-primary" :to="{name: 'details', params: {  id: registration.objectId }}">
+                              <i class="fa fa-eye"></i>&nbsp;&nbsp;View
+                          </router-link>
+                          <router-link tag="a" class="btn btn-sm btn-danger" to="/registration">
+                              <i class="fa fa-trash"></i>&nbsp;&nbsp;Delete
+                          </router-link>
+                        </td>
                       </tr>
                     </tbody>
                     <tfoot>
                       <tr>
                         <th colspan="1" rowspan="1">Name</th>
                         <th colspan="1" rowspan="1">Email</th>
+                        <th colspan="1" rowspan="1">Phone Number</th>
                         <th colspan="1" rowspan="1">Potential Score(s)</th>
                         <th colspan="1" rowspan="1">Action</th>
                       </tr>
@@ -76,29 +91,6 @@ export default {
   },
   methods: {
     getRegistrations () {
-      // api.getRegistrations()
-      // .then(response => {
-      //   this.registrations = response.data.results
-      // })
-      // .catch(error => {
-      //   console.log(error)
-      //   this.error = error
-      // })
-
-      // Parse.initialize('his-data')
-      // Parse.serverURL = 'http://his-data.herokuapp.com/parse'
-      // var Registration = Parse.Object.extend('Registration')
-      // var query = new Parse.Query(Registration)
-      // query.find()
-      // .then(result => {
-      //   result.forEach(val => {
-      //     this.registrations.push(val.toJSON())
-      //   })
-      // })
-      // .catch(error => {
-      //   console.log(error)
-      // })
-
       // live query
       Parse.initialize('his-data')
       Parse.serverURL = 'http://his-data.herokuapp.com/parse'

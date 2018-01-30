@@ -36,6 +36,18 @@ export default {
     })
   },
 
+  getRegistrationData (id) {
+    return axios({
+      url: config.serverURI + 'classes/Registration/' + id,
+      method: 'get',
+      headers: {
+        'X-Parse-Application-Id': config.parseAppId,
+        'X-Parse-REST-API-Key': config.parseMasterKey,
+        'Content-type': 'application/json'
+      }
+    })
+  },
+
   request (method, uri, data = null) {
     if (!method) {
       console.error('API function call requires method argument')
