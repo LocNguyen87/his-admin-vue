@@ -77,7 +77,6 @@
 import $ from 'jquery'
 var Parse = require('parse')
 
-// import $ from 'jquery'
 // Require needed datatables modules
 import 'datatables.net'
 import 'datatables.net-bs'

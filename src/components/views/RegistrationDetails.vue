@@ -1,10 +1,22 @@
 <template lang="html">
-
+  <div class="content">
+    <div class="row center-block">
+      <p>Hello world ! {{ reg.email }}</p>
+    </div>
+  </div>
 </template>
 
 <script>
+
 var Parse = require('parse')
 export default {
+  name: 'RegistrationDetails',
+  data () {
+    return {
+      reg: this.$store.state.registration,
+      error: null
+    }
+  },
   methods: {
     getRegistrationData (id) {
       // live query
@@ -12,18 +24,17 @@ export default {
       Parse.serverURL = 'http://his-data.herokuapp.com/parse'
       var Registration = Parse.Object.extend('Registration')
       var query = new Parse.Query(Registration)
-      query.get(id, {
-        success: function (registration) {
-          console.log(registration.toJSON())
-        }
-      }, {
-        error: function (obj, error) {
-          console.log(error)
-        }
+      query.get(id)
+      .then(result => {
+        this.$store.commit('SET_REGISTRATION', result.toJSON())
+        this.reg = result.toJSON()
+      })
+      .catch(error => {
+        console.log(error)
       })
     }
   },
-  mounted () {
+  created () {
     this.getRegistrationData(this.$route.params.id)
   }
 }

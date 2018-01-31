@@ -10,5 +10,11 @@ export default {
   },
   SET_TOKEN (state, token) {
     state.token = token
+  },
+  SET_REGISTRATION (state, registration) {
+    state.registration = registration
+  },
+  TOGGLE_FETCHING (state) {
+    state.fetching = (state.fetching === '') ? 'fetching' : ''
   }
 }
