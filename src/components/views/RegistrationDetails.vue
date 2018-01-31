@@ -12,7 +12,7 @@
           <div class="col-xs-12">
             <h2 class="page-header">
               <i class="fa fa-globe"></i> Registration for travel consultancy
-              <small class="pull-right">Date: {{ getReadableDate }}</small>
+              <small class="pull-right">Date: {{ getReadableDate(registration.createdAt) }}</small>
             </h2>
           </div>
           <!-- /.col -->
@@ -74,11 +74,6 @@ export default {
   created () {
     this.getRegistrationData(this.$route.params.id)
   },
-  computed: {
-    getReadableDate (iso) {
-      return moment(iso).format('DD/MM/YYYY')
-    }
-  },
   methods: {
     getRegistrationData (id) {
       this.loading = true
@@ -97,6 +92,9 @@ export default {
         this.loading = false
         this.error = error
       })
+    },
+    getReadableDate (iso) {
+      return moment(iso).format('DD/MM/YYYY')
     }
   }
 }
