@@ -22,48 +22,15 @@
                 <div class="col-sm-12 table-responsive">
                   <table aria-describedby="registration-table_info" role="grid" id="registration-table" class="table table-bordered table-striped dataTable">
                     <thead>
-                      <tr role="row">
-                        <th aria-label="Rendering engine: activate to sort column descending" aria-sort="ascending" style="width: 167px;" colspan="1" rowspan="1" aria-controls="registration-table" tabindex="0" class="sorting_asc">Name</th>
-                        <th aria-label="Browser: activate to sort column ascending" style="width: 207px;" colspan="1" rowspan="1" aria-controls="registration-table" tabindex="0" class="sorting">Email</th>
-                        <th aria-label="Phone Number" style="width: 207px;" colspan="1" rowspan="1" aria-controls="registration-table" tabindex="0" class="sorting">Phone Number</th>
-                        <th aria-label="Platform(s): activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="registration-table" tabindex="0" class="sorting">Potential Score (s)</th>
-                        <th aria-label="Platform(s): activate to sort column ascending" style="width: 182px;" colspan="1" rowspan="1" aria-controls="registration-table" tabindex="0" class="sorting">Submitted At</th>
-                        <th aria-label="Engine version: activate to sort column ascending" style="width: 142px;" colspan="1" rowspan="1" aria-controls="registration-table" tabindex="0" class="sorting">Action</th>
+                      <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Phone</th>
+                          <th>Potential Score</th>
+                          <th>Date</th>
+                          <th>Action</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr v-for="registration in registrations" >
-                        <td>{{ registration.fullName }}</td>
-                        <td>{{ registration.email }}</td>
-                        <td>{{ registration.phone }}</td>
-                        <td>
-                          <span class="badge bg-green">{{ registration.potentialScore * 10 }}%</span>
-                        </td>
-                        <td class="sorting_1">
-                          {{ getReadableDate(registration.createdAt) }}
-                        </td>
-                        <td>
-                          <div class="btn-group" role="group" aria-label="...">
-                            <router-link tag="a" class="btn btn-sm btn-primary" :to="{name: 'details', params: {  id: registration.objectId }}">
-                                <i class="fa fa-eye"></i>&nbsp;&nbsp;View
-                            </router-link>
-                            <router-link tag="a" class="btn btn-sm btn-danger" to="/registration">
-                                <i class="fa fa-trash"></i>&nbsp;&nbsp;Delete
-                            </router-link>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                    <tfoot>
-                      <tr>
-                        <th colspan="1" rowspan="1">Name</th>
-                        <th colspan="1" rowspan="1">Email</th>
-                        <th colspan="1" rowspan="1">Phone Number</th>
-                        <th colspan="1" rowspan="1">Potential Score(s)</th>
-                        <th colspan="1" rowspan="1">Submitted At</th>
-                        <th colspan="1" rowspan="1">Action</th>
-                      </tr>
-                    </tfoot>
                   </table>
                 </div>
               </div>
@@ -90,7 +57,8 @@ export default {
   data () {
     return {
       registrations: [],
-      error: null
+      error: null,
+      table: null
     }
   },
   methods: {
@@ -110,6 +78,13 @@ export default {
       .catch(error => {
         console.log(error)
       })
+      .then(() => {
+        const vm = this
+        this.table = this.initTable()
+        $('.viewDetailsBtn').on('click', function () {
+          vm.goToDetails(this.id)
+        })
+      })
 
       var subscription = query.subscribe()
 
@@ -122,6 +97,7 @@ export default {
       subscription.on('update', (object) => {
         var localMatchedObject = this.registrations.find(obj => { return obj.objectId === object.toJSON().objectId })
         Object.assign(localMatchedObject, object.toJSON())
+        this.table.clear().rows.add(this.registrations).draw()
       })
       subscription.on('delete', (object) => {
         var localMatchedObject = this.registrations.find(obj => { return obj.objectId === object.toJSON().objectId })
@@ -133,25 +109,43 @@ export default {
         this.registrations = updatedData
       })
     },
+    initTable () {
+      return $('#registration-table').DataTable({
+        data: this.registrations,
+        columns: [
+          { data: 'fullName' },
+          { data: 'email' },
+          { data: 'phone' },
+          {
+            data: 'potentialScore',
+            render: function (data, type, row, meta) {
+              return '<span class="badge bg-green">' + (data * 10) + '%</span>'
+            }
+          },
+          {
+            data: 'createdAt',
+            render: function (data, type, row, meta) {
+              return moment(data).format('DD/MM/YYYY')
+            }
+          },
+          {
+            data: 'objectId',
+            render: function (data, type, row, meta) {
+              return '<div role="group" aria-label="..." class="btn-group"><a id="' + data + '" data-registration-id="' + data + '" class="btn btn-sm btn-primary viewDetailsBtn"><i class="fa fa-eye"></i>&nbsp;&nbsp;View </a> <a href="/registration" class="btn btn-sm btn-danger active router-link-active"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a></div>'
+            }
+          }
+        ]
+      })
+    },
     getReadableDate (iso) {
       return moment(iso).format('DD/MM/YYYY')
+    },
+    goToDetails: function (id) {
+      this.$router.push({name: 'details', params: { id }})
     }
   },
   mounted () {
     this.getRegistrations()
-    this.$nextTick(() => {
-      $('#registration-table').DataTable({
-        data: this.registrations,
-        columns: [
-          { data: 'name' },
-          { data: 'email' },
-          { data: 'phone' },
-          { data: 'potentialScore' },
-          { data: 'createdAt' },
-          { data: '' }
-        ]
-      })
-    })
   }
 }
 </script>
