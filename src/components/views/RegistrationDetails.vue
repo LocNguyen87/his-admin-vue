@@ -7,52 +7,100 @@
       <div v-if="error" class="error">
         {{ error }}
       </div>
-      <div v-if="registration" class="invoice">
+      <div v-if="registration">
         <div class="row">
-          <div class="col-xs-12">
-            <h2 class="page-header">
-              <i class="fa fa-globe"></i> Registration for travel consultancy
-              <small class="pull-right">Date: {{ getReadableDate(registration.createdAt) }}</small>
-            </h2>
+          <div class="col-md-4">
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <i class="fa fa-user fa-2x"></i> <h3 class="box-title">Personal Information</h3>
+              </div>
+              <div class="box-body">
+                <dl>
+                  <dt>Name:</dt>
+                  <dd>{{ registration.fullName }}</dd>
+                  <dt>Email:</dt>
+                  <dd>{{ registration.email }}</dd>
+                  <dt>Phone:</dt>
+                  <dd>{{ registration.phone }}</dd>
+                  <dt>Address:</dt>
+                  <dd>{{ registration.address }}</dd>
+                  <dt>Region:</dt>
+                  <dd>{{ registration.region }}</dd>
+                  <dt>Nation:</dt>
+                  <dd>{{ registration.nation }}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <i class="fa fa-comments fa-2x"></i> <h3 class="box-title">Travel Request</h3>
+              </div>
+              <div class="box-body">
+                <dl>
+                  <dt>Has Visa:</dt>
+                  <dd>{{ registration.hasVisa === true ? 'Yes' : 'No' }}</dd>
+                  <dt>Travel Type:</dt>
+                  <dd>{{ registration.travelType }}</dd>
+                  <dt>Estimate Departure:</dt>
+                  <dd>{{ registration.timeToGo }}</dd>
+                  <dt>Estimate Budget:</dt>
+                  <dd>{{ registration.budget }}</dd>
+                  <dt>Request:</dt>
+                  <dd>{{ registration.request }}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="box box-info">
+              <div class="box-header with-border">
+                <i class="fa fa-bar-chart fa-2x"></i> <h3 class="box-title">Device & Traffic Source</h3>
+              </div>
+              <div class="box-body">
+                <dl>
+                  <dt>Device:</dt>
+                  <dd>{{ registration.deviceInfo }}</dd>
+                  <dt>System:</dt>
+                  <dd>{{ registration.systemInfo }}</dd>
+                  <dt>URL:</dt>
+                  <dd>{{ registration.originalUrl }}</dd>
+                  <dt>UTM Source:</dt>
+                  <dd>{{ registration.utmSource }}</dd>
+                  <dt>UTM Medium:</dt>
+                  <dd>{{ registration.utmMedium }}</dd>
+                  <dt>UTM Campaign:</dt>
+                  <dd>{{ registration.utmCampaign }}</dd>
+                  <dt>GCLID:</dt>
+                  <dd>{{ registration.gclid }}</dd>
+                </dl>
+              </div>
+            </div>
           </div>
           <!-- /.col -->
         </div>
         <div class="row">
-          <div class="col-md-4">
-            <h4><i class="fa fa-user"></i>&nbsp;<strong>Personal Information</strong></h4>
-            <p>
-              <strong>Name:</strong> {{ registration.fullName }} <br />
-              <strong>Email:</strong> {{ registration.email }} <br />
-              <strong>Phone:</strong> {{ registration.phone }} <br />
-              <strong>Address:</strong> {{ registration.address }} <br />
-              <strong>Region:</strong> {{ registration.region }} <br />
-              <strong>Nation:</strong> {{ registration.nation }} <br />
-            </p>
-          </div>
-          <div class="col-md-4">
-            <h4><i class="fa fa-comments"></i>&nbsp;<strong>Travel Request</strong></h4>
-            <p>
-              <strong>Has Visa:</strong> {{ registration.hasVisa === true ? 'Yes' : 'No' }} <br />
-              <strong>Travel Type:</strong> {{ registration.travelType }} <br />
-              <strong>Estimate Departure:</strong> {{ registration.timeToGo }} <br />
-              <strong>Estimate Budget:</strong> {{ registration.budget }} <br />
-              <strong>Request:</strong> {{ registration.request }} <br />
-            </p>
-          </div>
-          <div class="col-md-4">
-            <h4><i class="fa fa-bar-chart"></i>&nbsp;<strong>Device & Traffic Source</strong></h4>
-            <p>
-              <strong>Device:</strong> {{ registration.deviceInfo }} <br />
-              <strong>System:</strong> {{ registration.systemInfo }} <br />
-              <strong>URL:</strong> {{ registration.originalUrl }} <br />
-              <strong>UTM Source:</strong> {{ registration.utmSource }} <br />
-              <strong>UTM Medium:</strong> {{ registration.utmMedium }} <br />
-              <strong>UTM Campaign:</strong> {{ registration.utmCampaign }} <br />
-              <strong>GCLID:</strong> {{ registration.gclid }} <br />
-            </p>
+          <div class="col-xs-12">
+            <div class="box box-warning">
+              <div class="box-header with-border">
+                  <i class="fa fa-globe"></i> <h3 class="box-title">Submission General Data</h3>
+              </div>
+              <div class="box-body">
+                <div class="row">
+                  <div class="col-md-4">
+                    <dl>
+                      <dt>Created on </dt>
+                      <dd>{{ getReadableDate(registration.createdAt) }}</dd>
+                      <dt>Updated on </dt>
+                      <dd>{{ getReadableDate(registration.updatedAt) }}</dd>
+                    </dl>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -94,7 +142,7 @@ export default {
       })
     },
     getReadableDate (iso) {
-      return moment(iso).format('DD/MM/YYYY')
+      return moment(iso).format('h:mm:ss a') + ' - ' + moment(iso).format('DD/MM/YYYY')
     }
   }
 }
