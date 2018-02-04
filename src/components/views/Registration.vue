@@ -93,6 +93,7 @@ export default {
       })
       subscription.on('create', (object) => {
         this.registrations.push(object.toJSON())
+        this.table.clear().rows.add(this.registrations).draw()
       })
       subscription.on('update', (object) => {
         var localMatchedObject = this.registrations.find(obj => { return obj.objectId === object.toJSON().objectId })

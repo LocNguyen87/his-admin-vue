@@ -62,7 +62,7 @@
                 <dl>
                   <dt>Device:</dt>
                   <dd>{{ registration.deviceInfo }}</dd>
-                  <dt>System:</dt>
+                  <dt>Browser:</dt>
                   <dd>{{ registration.systemInfo }}</dd>
                   <dt>URL:</dt>
                   <dd>{{ registration.originalUrl }}</dd>
@@ -94,6 +94,14 @@
                       <dd>{{ getReadableDate(registration.createdAt) }}</dd>
                       <dt>Updated on </dt>
                       <dd>{{ getReadableDate(registration.updatedAt) }}</dd>
+                    </dl>
+                  </div>
+                  <div class="col-md-4">
+                    <dl>
+                      <dt>Time Spent On Page (seconds)</dt>
+                      <dd>{{ registration.readingTime }}</dd>
+                      <dt>Scrolled </dt>
+                      <dd>{{ registration.scrolled }}</dd>
                     </dl>
                   </div>
                 </div>
