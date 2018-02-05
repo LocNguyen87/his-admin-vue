@@ -26,6 +26,7 @@
                           <th>Name</th>
                           <th>Email</th>
                           <th>Phone</th>
+                          <th>UTM Campaign</th>
                           <th>Potential Score</th>
                           <th>Date</th>
                           <th>Action</th>
@@ -81,8 +82,8 @@ export default {
       .then(() => {
         const vm = this
         this.table = this.initTable()
-        $('.viewDetailsBtn').on('click', function () {
-          vm.goToDetails(this.id)
+        $('td').on('click', '.viewDetailsBtn', function () {
+          vm.goToDetails($(this).parent().attr('id'))
         })
       })
 
@@ -93,12 +94,12 @@ export default {
       })
       subscription.on('create', (object) => {
         this.registrations.push(object.toJSON())
-        this.table.clear().rows.add(this.registrations).draw()
+        this.reloadTable()
       })
       subscription.on('update', (object) => {
         var localMatchedObject = this.registrations.find(obj => { return obj.objectId === object.toJSON().objectId })
         Object.assign(localMatchedObject, object.toJSON())
-        this.table.clear().rows.add(this.registrations).draw()
+        this.reloadTable()
       })
       subscription.on('delete', (object) => {
         var localMatchedObject = this.registrations.find(obj => { return obj.objectId === object.toJSON().objectId })
@@ -108,19 +109,65 @@ export default {
           return e.objectId !== object.toJSON().objectId
         })
         this.registrations = updatedData
+        this.reloadTable()
+      })
+    },
+    reloadTable () {
+      $('#registration-table').dataTable().fnClearTable()
+      $('#registration-table').dataTable().fnDestroy()
+      this.table = this.initTable()
+
+      this.$nextTick(function () {
+        const vm = this
+        $('td').on('click', '.viewDetailsBtn', function () {
+          vm.goToDetails($(this).parent().attr('id'))
+          console.log('event assigned')
+        })
       })
     },
     initTable () {
-      return $('#registration-table').DataTable({
+      const vm = this
+      return $('#registration-table')
+      .on('length.dt', function () {
+        vm.$nextTick(function () {
+          $('td').on('click', '.viewDetailsBtn', function () {
+            vm.goToDetails($(this).parent().attr('id'))
+            console.log('event assigned')
+          })
+        })
+      })
+      .on('order.dt', function () {
+        vm.$nextTick(function () {
+          $('td').on('click', '.viewDetailsBtn', function () {
+            vm.goToDetails($(this).parent().attr('id'))
+            console.log('event assigned')
+          })
+        })
+      })
+      .on('page.dt', function () {
+        vm.$nextTick(function () {
+          $('td').on('click', '.viewDetailsBtn', function () {
+            vm.goToDetails($(this).parent().attr('id'))
+            console.log('event assigned')
+          })
+        })
+      })
+      .DataTable({
         data: this.registrations,
+
         columns: [
           { data: 'fullName' },
           { data: 'email' },
           { data: 'phone' },
+          { data: 'utmCampaign' },
           {
             data: 'potentialScore',
             render: function (data, type, row, meta) {
-              return '<span class="badge bg-green">' + (data * 10) + '%</span>'
+              var color
+              if (data <= 3) color = 'red'
+              else if (data > 3.1 && data < 7.9) color = 'orange'
+              else color = 'green'
+              return '<span class="badge bg-' + color + '">' + (data * 10) + '%</span>'
             }
           },
           {
@@ -132,7 +179,7 @@ export default {
           {
             data: 'objectId',
             render: function (data, type, row, meta) {
-              return '<div role="group" aria-label="..." class="btn-group"><a id="' + data + '" data-registration-id="' + data + '" class="btn btn-sm btn-primary viewDetailsBtn"><i class="fa fa-eye"></i>&nbsp;&nbsp;View </a> <a href="/registration" class="btn btn-sm btn-danger active router-link-active"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a></div>'
+              return '<div role="group" aria-label="..." class="btn-group" id="' + data + '"><a data-record-id="' + data + '" class="btn btn-sm btn-primary viewDetailsBtn"><i class="fa fa-eye"></i>&nbsp;&nbsp;View </a> <a href="/registration" class="btn btn-sm btn-danger active router-link-active"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a></div>'
             }
           }
         ]
