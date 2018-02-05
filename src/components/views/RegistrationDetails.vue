@@ -100,7 +100,7 @@
                     <dl>
                       <dt>Time Spent On Page (seconds)</dt>
                       <dd>{{ registration.readingTime }}</dd>
-                      <dt>Scrolled </dt>
+                      <dt>Scrolled (%)</dt>
                       <dd>{{ registration.scrolled }}</dd>
                     </dl>
                   </div>
