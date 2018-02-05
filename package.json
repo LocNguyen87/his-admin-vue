@@ -12,7 +12,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "deploy": "netlify deploy dist",
-    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
+    "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs",
+    "start": "node server.js"
   },
   "dependencies": {
     "axios": "^0.15.3",
@@ -60,7 +61,7 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.14.1",
+    "express": "^4.16.2",
     "extract-text-webpack-plugin": "^2.0.0",
     "file-loader": "^0.10.0",
     "friendly-errors-webpack-plugin": "^1.1.3",
