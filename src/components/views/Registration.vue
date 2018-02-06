@@ -1,8 +1,8 @@
 <template lang="html">
   <section class="content">
     <div class="row center-block">
-      <h2 class="pull-left">Registration List ({{ registrations.length }})&nbsp;&nbsp;&nbsp;<a @click="doExport" class="btn btn-primary pull-right"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;Export Data</a></h2>
-
+      <h2 class="pull-left">Submission List ({{ registrations.length }})</h2>
+      <a @click="doExport" class="btn btn-primary pull-right"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;Export Data</a>
       <div class="col-md-12">
         <div class="box">
           <div class="box-header">
@@ -192,7 +192,7 @@ export default {
     doExport () {
       const wb = xlsx.utils.book_new()
       const ws = xlsx.utils.json_to_sheet(this.registrations)
-      xlsx.utils.book_append_sheet(wb, ws, 'SheetJS')
+      xlsx.utils.book_append_sheet(wb, ws, 'Osaka-Registration-Data')
       xlsx.writeFile(wb, 'sheetjs.xlsx')
     }
 
@@ -222,5 +222,8 @@ table.dataTable thead .sorting_asc:after {
 
 table.dataTable thead .sorting_desc:after {
   content: "\f0de";
+}
+h2.pull-left {
+  margin-top:0;
 }
 </style>
