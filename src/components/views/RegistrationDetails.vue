@@ -135,7 +135,7 @@ export default {
       this.loading = true
       // live query
       Parse.initialize('his-data')
-      Parse.serverURL = 'http://his-data.herokuapp.com/parse'
+      Parse.serverURL = 'https://his-data.herokuapp.com/parse'
       var Registration = Parse.Object.extend('Registration')
       var query = new Parse.Query(Registration)
       query.get(id)
