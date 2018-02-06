@@ -1,5 +1,5 @@
 export default {
-  serverURI: 'http://his-data.herokuapp.com/parse/',
+  serverURI: 'https://his-data.herokuapp.com/parse/',
   parseAppId: 'his-data',
   parseMasterKey: 'v0ncala1',
   fixedLayout: false,
