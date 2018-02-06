@@ -1,7 +1,8 @@
 <template lang="html">
   <section class="content">
     <div class="row center-block">
-      <h2>Registration List ({{ registrations.length }})</h2>
+      <h2 class="pull-left">Registration List ({{ registrations.length }})&nbsp;&nbsp;&nbsp;<a @click="doExport" class="btn btn-primary pull-right"><i class="fa fa-download"></i>&nbsp;&nbsp;&nbsp;Export Data</a></h2>
+
       <div class="col-md-12">
         <div class="box">
           <div class="box-header">
@@ -48,6 +49,7 @@
 // import api from '../../api'
 import moment from 'moment'
 import $ from 'jquery'
+import xlsx from 'xlsx' // eslint-disable-line no-unused-vars
 var Parse = require('parse')
 
 // Require needed datatables modules
@@ -186,7 +188,14 @@ export default {
     },
     goToDetails: function (id) {
       this.$router.push({name: 'details', params: { id }})
+    },
+    doExport () {
+      const wb = xlsx.utils.book_new()
+      const ws = xlsx.utils.json_to_sheet(this.registrations)
+      xlsx.utils.book_append_sheet(wb, ws, 'SheetJS')
+      xlsx.writeFile(wb, 'sheetjs.xlsx')
     }
+
   },
   mounted () {
     this.getRegistrations()
