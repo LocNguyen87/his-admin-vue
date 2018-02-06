@@ -121,7 +121,6 @@ export default {
         const vm = this
         $('td').on('click', '.viewDetailsBtn', function () {
           vm.goToDetails($(this).parent().attr('id'))
-          console.log('event assigned')
         })
       })
     },
@@ -132,7 +131,6 @@ export default {
         vm.$nextTick(function () {
           $('td').on('click', '.viewDetailsBtn', function () {
             vm.goToDetails($(this).parent().attr('id'))
-            console.log('event assigned')
           })
         })
       })
@@ -140,7 +138,6 @@ export default {
         vm.$nextTick(function () {
           $('td').on('click', '.viewDetailsBtn', function () {
             vm.goToDetails($(this).parent().attr('id'))
-            console.log('event assigned')
           })
         })
       })
@@ -148,7 +145,6 @@ export default {
         vm.$nextTick(function () {
           $('td').on('click', '.viewDetailsBtn', function () {
             vm.goToDetails($(this).parent().attr('id'))
-            console.log('event assigned')
           })
         })
       })
