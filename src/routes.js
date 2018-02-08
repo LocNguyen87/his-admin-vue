@@ -4,12 +4,9 @@ import NotFoundView from './components/404.vue'
 
 // Import Views - Dash
 import DashboardView from './components/views/Dashboard.vue'
-import TablesView from './components/views/Tables.vue'
-import TasksView from './components/views/Tasks.vue'
 import SettingView from './components/views/Setting.vue'
 import AccessView from './components/views/Access.vue'
 import ServerView from './components/views/Server.vue'
-import ReposView from './components/views/Repos.vue'
 import RegistrationView from './components/views/Registration.vue'
 import RegistrationDetailsView from './components/views/RegistrationDetails.vue'
 
@@ -26,21 +23,8 @@ const routes = [{
     component: DashboardView,
     name: 'Dashboard',
     meta: {
-      description: 'Overview of environment'
-    }
-  }, {
-    path: 'tables',
-    component: TablesView,
-    name: 'Tables',
-    meta: {
-      description: 'Simple and advance table in CoPilot'
-    }
-  }, {
-    path: 'tasks',
-    component: TasksView,
-    name: 'Tasks',
-    meta: {
-      description: 'Tasks page in the form of a timeline'
+      description: 'Overview of environment',
+      requiresAuth: true
     }
   }, {
     path: 'setting',
@@ -65,19 +49,13 @@ const routes = [{
       requiresAuth: true
     }
   }, {
-    path: 'repos',
-    component: ReposView,
-    name: 'Repository',
-    meta: {
-      description: 'List of popular javascript repos'
-    }
-  }, {
     path: 'registration',
     alias: '',
     component: RegistrationView,
     name: 'Registration',
     meta: {
-      description: 'List of all registrations'
+      description: 'List of all registrations',
+      requiresAuth: true
     }
   }, {
     path: 'registration/:id',
@@ -85,7 +63,8 @@ const routes = [{
     component: RegistrationDetailsView,
     name: 'details',
     meta: {
-      description: 'Full details of registration'
+      description: 'Full details of registration',
+      requiresAuth: true
     }
   }]
 }, {

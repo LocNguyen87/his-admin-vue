@@ -143,6 +143,13 @@ export default {
           })
         })
       })
+      .on('search.dt', function () {
+        vm.$nextTick(function () {
+          $('td').on('click', '.viewDetailsBtn', function () {
+            vm.goToDetails($(this).parent().attr('id'))
+          })
+        })
+      })
       .on('page.dt', function () {
         vm.$nextTick(function () {
           $('td').on('click', '.viewDetailsBtn', function () {
@@ -193,7 +200,7 @@ export default {
       const wb = xlsx.utils.book_new()
       const ws = xlsx.utils.json_to_sheet(this.registrations)
       xlsx.utils.book_append_sheet(wb, ws, 'Osaka-Registration-Data')
-      xlsx.writeFile(wb, 'sheetjs.xlsx')
+      xlsx.writeFile(wb, 'Osaka-Registration-Data')
     }
 
   },
