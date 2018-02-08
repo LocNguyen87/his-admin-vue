@@ -91,6 +91,7 @@
               <div class="box-body">
                 <div class="row">
                   <div class="col-md-4">
+                    <h4>Submission Date</h4>
                     <dl>
                       <dt>Created on </dt>
                       <dd>{{ getReadableDate(registration.createdAt) }}</dd>
@@ -99,12 +100,18 @@
                     </dl>
                   </div>
                   <div class="col-md-4">
+                    <h4>Visitor Interaction</h4>
                     <dl>
                       <dt>Time Spent On Page (seconds)</dt>
                       <dd>{{ registration.readingTime }}</dd>
                       <dt>Scrolled (%)</dt>
                       <dd>{{ registration.scrolled }}</dd>
                     </dl>
+                  </div>
+                  <div class="col-md-4">
+                    <h4>Contact Status</h4>
+                    <a v-if="registration.isCalled" class="btn btn-flat btn-lg btn-success"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Called</a><a v-else class="btn btn-flat btn-lg btn-danger"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Not Called</a>
+                    <a v-if="registration.visitedOffice" class="btn btn-flat btn-lg btn-success"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Visited</a><a v-else class="btn btn-flat btn-lg btn-danger"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Not Visited</a>
                   </div>
                 </div>
               </div>
