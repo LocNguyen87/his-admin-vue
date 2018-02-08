@@ -72,6 +72,8 @@
                   <dd>{{ registration.utmMedium }}</dd>
                   <dt>UTM Campaign:</dt>
                   <dd>{{ registration.utmCampaign }}</dd>
+                  <dt>UTM Content:</dt>
+                  <dd>{{ registration.utmContent }}</dd>
                   <dt>GCLID:</dt>
                   <dd>{{ registration.gclid }}</dd>
                 </dl>

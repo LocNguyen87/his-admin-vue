@@ -27,7 +27,9 @@
                           <th>Name</th>
                           <th>Email</th>
                           <th>Phone</th>
+                          <th>UTM Source</th>
                           <th>UTM Campaign</th>
+                          <th>UTM Content</th>
                           <th>Potential Score</th>
                           <th>Date</th>
                           <th>Action</th>
@@ -164,7 +166,9 @@ export default {
           { data: 'fullName' },
           { data: 'email' },
           { data: 'phone' },
+          { data: 'utmSource' },
           { data: 'utmCampaign' },
+          { data: 'utmContent' },
           {
             data: 'potentialScore',
             render: function (data, type, row, meta) {
