@@ -161,7 +161,8 @@ export default {
       })
       .DataTable({
         data: this.registrations,
-
+        pageLength: 50,
+        order: [[ 6, 'desc' ]],
         columns: [
           { data: 'fullName' },
           { data: 'email' },
