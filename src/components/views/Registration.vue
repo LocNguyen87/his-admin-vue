@@ -205,7 +205,7 @@ export default {
       const wb = xlsx.utils.book_new()
       const ws = xlsx.utils.json_to_sheet(this.registrations)
       xlsx.utils.book_append_sheet(wb, ws, 'Osaka-Registration-Data')
-      xlsx.writeFile(wb, 'Osaka-Registration-Data')
+      xlsx.writeFile(wb, 'Osaka-Registration-Data.xlsx')
     }
 
   },
