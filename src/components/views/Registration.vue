@@ -189,7 +189,7 @@ export default {
           {
             data: 'objectId',
             render: function (data, type, row, meta) {
-              return '<div role="group" aria-label="..." class="btn-group" id="' + data + '"><a data-record-id="' + data + '" class="btn btn-sm btn-primary viewDetailsBtn"><i class="fa fa-eye"></i>&nbsp;&nbsp;View </a> <a href="/registration" class="btn btn-sm btn-danger active router-link-active"><i class="fa fa-trash"></i>&nbsp;&nbsp;Delete</a></div>'
+              return '<div role="group" aria-label="..." class="btn-group" id="' + data + '"><a data-record-id="' + data + '" class="btn btn-sm btn-primary viewDetailsBtn"><i class="fa fa-eye"></i></a> <a href="/registration" class="btn btn-sm btn-danger active router-link-active"><i class="fa fa-trash"></i></a></div>'
             }
           }
         ]
